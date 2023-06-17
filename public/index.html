@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="index.css">
+    <script src="index.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');
+    </style>
+    <title>Document</title>
+</head>
+<body>
+        <div class="calculatrice">
+            <table width="21%" >
+                <tr>
+                    <td colspan="5">
+                        <div class="screen">
+                            <div class="operation"></div>
+                            <div class="result"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button class="bouton btnTrigo c">C</button>
+                    </td>
+                    <td>
+                        <button   class="bouton normal btnTrigo" id="CE" >CE</button>
+                    </td>
+                    <td>
+                        <button   class="bouton normal btnTrigo" id="par1" >(</button>
+                    </td>
+                    <td>
+                        <button   class="bouton normal btnTrigo" id="par2">)</button>
+                    </td>
+                    <td>
+                        <button   class="bouton normal btnTrigo" id="div"  >/</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button   class="bouton different" id="" onclick="sqrt()">Sqrt</button>
+                    </td>
+                    <td>
+                        <button   class="bouton normal btnTrigo" id="sept"  >7</button>
+                    </td>
+                    <td>
+                        <button   class="bouton normal btnTrigo" id="huit"  >8</button>
+                    </td>
+                    <td>
+                        <button   class="bouton normal btnTrigo" id="neuf"  >9</button>
+                    </td>
+                    <td>
+                        <button   class="bouton normal btnTrigo" id="multip"  >x</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button   class="bouton different" id="" onclick="tan()">tan</button>
+                    </td>
+                    <td>
+                        <button   class="bouton normal btnTrigo" id="quatre"  >4</button>
+                    </td>
+                    <td>
+                        <button   class="bouton normal btnTrigo" id="cinq"  >5</button>
+                    </td>
+                    <td>
+                        <button   class="bouton normal btnTrigo" id="seize"  >6</button>
+                    </td>
+                    <td>
+                        <button   class="bouton normal btnTrigo" id="diff"  >-</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button   class="bouton different" id="" onclick="sin()" >sin</button>
+                    </td>
+                    <td>
+                        <button class="bouton normal btnTrigo">1</button>
+                    </td>
+                    <td>
+                        <button class="bouton normal btnTrigo">2</button>
+
+                    </td>
+                    <td>
+                        <button   class="bouton normal btnTrigo" id="trois"  >3</button>
+                    </td>
+                    <td rowspan="2">
+                        <button   class="bouton normal btnTrigo" id="addition"  >+</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button   class="bouton different" id="" onclick="cos()">cos</button>
+                    </td>
+                    <td>
+                        <button   class="bouton normal btnTrigo" id="zero"  >0</button>
+                    </td>
+                    <td>
+                        <button   class="bouton normal btnTrigo" id="point"  >.</button>
+                    </td>
+                    <td>
+                        <button   class="bouton normal btnTrigo" id="pourcen" onclick="pourcentage()">%</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td colspan="3" align="right">
+                        <button  class="bouton normal btnTrigo" id="egal" >=</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+
+</body>
+<script>const output=document.querySelector(".operation");const result=document.querySelector(".result");const keys=document.querySelectorAll(".btnTrigo");keys.forEach(key=>{key.addEventListener("click",calculate)});var numChar;var previousChar;var CurrentChar;var operations=['/','+','*','-','.','%'];function calculate(){let buttonText=this.innerText;if(buttonText==="x"){buttonText="*"}
+  if(buttonText==="C"){output.innerText="";result.innerText="0";result.style.fontSize="30px"
+  result.style.animation="";output.style.animation="";return}
+  if(buttonText==="CE"){output.textContent=output.textContent.substr(0,output.textContent.length-1);return}
+  if(buttonText==="="){result.innerText=eval(output.innerText);result.style.animation="big 0.5s ease-in-out";output.style.animation="small 0.5s ease-in-out";result.style.animationFillMode="forwards";output.style.animationFillMode="forwards"}else{output.textContent+=buttonText;numChar=output.textContent.length
+  CurrentChar=buttonText
+  getpreviousChar()
+  return}}
+  function getpreviousChar(){previousChar=output.textContent.substring(numChar-2,numChar-1)
+  checkSyntax()}
+  function checkSyntax(){if(operations.includes(CurrentChar)&&numChar==1&&CurrentChar!='-'){removeChar()}
+  if(operations.includes(previousChar)&&operations.includes(CurrentChar)){if(previousChar==CurrentChar){removeChar()}else{output.textContent=output.textContent.slice(0,numChar-2)+output.textContent.slice(numChar-1)}}
+  function removeChar(){output.textContent=output.textContent.substring(0,numChar-1)}}
+  function sin(){result.textContent=Math.sin(output.textContent);output.textContent="Sin("+output.textContent+")"
+  result.style.animation="big 0.5s ease-in-out";output.style.animation="small 0.5s ease-in-out";result.style.animationFillMode="forwards";output.style.animationFillMode="forwards"}
+  function cos(){result.textContent=Math.cos(output.textContent);output.textContent="Cos("+output.textContent+")"
+  result.style.animation="big 0.5s ease-in-out";output.style.animation="small 0.5s ease-in-out";result.style.animationFillMode="forwards";output.style.animationFillMode="forwards"}
+  function tan(){result.textContent=Math.tan(output.textContent);output.textContent="Tan("+output.textContent+")"
+  result.style.animation="big 0.5s ease-in-out";output.style.animation="small 0.5s ease-in-out";result.style.animationFillMode="forwards";output.style.animationFillMode="forwards"}
+  function sqrt(){result.textContent=Math.sqrt(output.textContent);output.textContent="√"+output.textContent
+  result.style.animation="big 0.5s ease-in-out";output.style.animation="small 0.5s ease-in-out";result.style.animationFillMode="forwards";output.style.animationFillMode="forwards"}
+  function pourcentage(){result.textContent=(output.textContent)/100
+  result.style.animation="big 0.5s ease-in-out";output.style.animation="small 0.5s ease-in-out";result.style.animationFillMode="forwards";output.style.animationFillMode="forwards"}
+
+
+</script>
+
+</html>
